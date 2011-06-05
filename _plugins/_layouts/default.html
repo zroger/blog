@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" >
+<head>	
+	<title>{{ page.title }}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+
+	<meta name="robots" content="all" />
+	<meta name="robots" content="index, follow" />
+	<meta name="revisit-after" content="7 days" />
+	<meta name="version" content="1.0" />
+	<meta name="copyright" content="" />
+	<link rel="shortcut icon" href="/favicon.ico" />
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/style.css" media="screen" type="text/css"/>
+    <link rel="stylesheet" href="/js/fancybox/jquery.fancybox-1.3.1.css" type="text/css">
+
+	<!-- Javascript -->
+	<script src="/js/jquery.min.js" type="text/javascript"></script>
+	<script src="/js/fancybox/jquery.fancybox-1.3.1.pack.js" type="text/javascript"></script>
+	<script src="/js/jquery.easing-1.3.pack.js" type="text/javascript"></script>
+	<script src="/js/ui.tabs.min.js" type="text/javascript"></script>
+	<script src="/js/jquery.cycle.js" type="text/javascript"></script>
+	<script src="/js/scripts.js" type="text/javascript"></script>
+
+	<!--[if IE 6]>
+	<link href="/css/ie.css" rel="stylesheet" media="screen" type="text/css" />
+	<![endif]-->
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-8668344-3']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+	</script>
+</head>
+<body class="{{ page.body }}">
+	<div id="header-wrapper">
+		<div id="header">
+			<h1>
+				<a id="logo" href="/" title="Jose Diaz-Gonzalez">Jose Diaz-Gonzalez</a>
+			</h1>
+			{% include navigation.markdown %}
+		</div><!-- end: #header -->
+	</div><!-- end: #header-wrapper-->
+	<div id="content-wrapper">
+		<div id="breadcrumb">
+			<a href="/">Home</a> &not; {% if page.category != null %}<a href="/categories/{{ page.category | replace:' ', '-' | downcase }}">{{ page.category }}</a> &not; {% endif %}{% if page.is_portfolio != null %}<a href="/portfolio/">Portfolio</a> &not; {% endif %}
+		</div>
+		<div id="main-container" class="clearfix">
+			{{ content }}
+		</div><!-- end: #main-container -->
+	</div><!-- end: #content-wrapper -->
+	{% include footer.markdown %}
+	<script type="text/javascript">
+		if ($('#disqus_thread').length) {
+			var disqus_shortname = 'josediazgonzalez'; // required: replace example with your forum shortname
+			var disqus_identifier = '{{ page.url }}';
+			var disqus_url = '{{ site.base_url }}{{ page.url }}';
+			var disqus_title = '{{ page.title }}';
+
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+				var commentCount = setInterval(function() {
+					if ($('#dsq-num-posts').length) {
+						$('.responses-number').html($('#dsq-num-posts').html());
+						clearInterval(commentCount);
+					}
+				}, 1000);
+			})();
+		}
+	</script>
+</body>
+</html>

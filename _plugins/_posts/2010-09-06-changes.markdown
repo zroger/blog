@@ -1,0 +1,10 @@
+---
+  title: Changes
+  category: Other
+  tags:
+    - thoughts
+    - life
+  layout: post
+---
+
+For anyone wondering why I was such an ass at CakeFest, don't worry, life comes crashing down around me otherwise.

@@ -1,0 +1,7 @@
+---
+layout: master
+---
+<h1 class="category">Stuff from {{ page.posts.first.date | date: "%B, %Y" }}</h1>
+{% for post in page.posts %}
+  {% include post-teaser.html %}
+{% endfor %}
