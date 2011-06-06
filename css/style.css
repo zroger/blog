@@ -1,31 +1,31 @@
 /*
-	HTML5 Reset :: style.css
-	----------------------------------------------------------
-	We have learned much from/been inspired by/taken code where offered from:
-	
-	Eric Meyer					:: http://ericmeyer.com
-	HTML5 Doctor				:: http://html5doctor.com
-	and the HTML5 Boilerplate	:: http://html5boilerplate.com
-	
+  HTML5 Reset :: style.css
+  ----------------------------------------------------------
+  We have learned much from/been inspired by/taken code where offered from:
+
+  Eric Meyer          :: http://ericmeyer.com
+  HTML5 Doctor        :: http://html5doctor.com
+  and the HTML5 Boilerplate :: http://html5boilerplate.com
+
 -------------------------------------------------------------------------------*/
 
 /* Let's default this puppy out
 -------------------------------------------------------------------------------*/
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup, menu, nav, section, menu, time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
-}									
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
 
 article, aside, figure, footer, header, hgroup, nav, section {display: block;}
 
 /* Responsive images and other embedded objects
-   Note: keeping IMG here will cause problems if you're using foreground images as sprites, like, say for Google Maps custom placemarkers. 
+   Note: keeping IMG here will cause problems if you're using foreground images as sprites, like, say for Google Maps custom placemarkers.
    There has been a report of problems with standard Google maps as well, but we haven't been able to duplicate or diagnose the issue. */
 img,
 object,
@@ -34,15 +34,15 @@ embed {max-width: 100%;}
 /* force a vertical scrollbar to prevent a jumpy page */
 html {overflow-y: scroll;}
 
-/* we use a lot of ULs that aren't bulleted. 
-	don't forget to restore the bullets within content. */
+/* we use a lot of ULs that aren't bulleted.
+  don't forget to restore the bullets within content. */
 ul {list-style: none;}
 
 blockquote, q {quotes: none;}
 
-blockquote:before, 
-blockquote:after, 
-q:before, 
+blockquote:before,
+blockquote:after,
+q:before,
 q:after {content: ''; content: none;}
 
 a {margin: 0; padding: 0; font-size: 100%; vertical-align: baseline; background: transparent;}
@@ -61,10 +61,10 @@ hr {display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 
 input, select {vertical-align: middle;}
 
 pre {
-	white-space: pre; /* CSS2 */
-	white-space: pre-wrap; /* CSS 2.1 */
-	white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
-	word-wrap: break-word; /* IE */
+  white-space: pre; /* CSS2 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+  word-wrap: break-word; /* IE */
 }
 
 input[type="radio"] {vertical-align: text-bottom;}
@@ -74,31 +74,31 @@ input[type="checkbox"] {vertical-align: bottom; *vertical-align: baseline;}
 select, input, textarea {font: 99% sans-serif;}
 
 table {font-size: inherit; font: 100%;}
- 
+
 /* Accessible focus treatment
-	people.opera.com/patrickl/experiments/keyboard/test */
+  people.opera.com/patrickl/experiments/keyboard/test */
 a:hover, a:active {outline: none;}
 
 small {font-size: 85%;}
 
 strong, th {font-weight: bold;}
 
-td, td img {vertical-align: top;} 
+td, td img {vertical-align: top;}
 
 /* Make sure sup and sub don't screw with your line-heights
-	gist.github.com/413930 */
+  gist.github.com/413930 */
 sub, sup {font-size: 75%; line-height: 0; position: relative;}
 sup {top: -0.5em;}
 sub {bottom: -0.25em;}
 
 /* standardize any monospaced elements */
-pre, code, kbd, samp {font-family: monospace, sans-serif;}
+pre, code, kbd, samp {font-family: "Inconsolata", monospace, sans-serif;}
 
 /* hand cursor on clickable elements */
 .clickable,
-label, 
-input[type=button], 
-input[type=submit], 
+label,
+input[type=button],
+input[type=submit],
 button {cursor: pointer;}
 
 /* Webkit browsers add a 2px margin outside the chrome of form elements */
@@ -106,7 +106,7 @@ button, input, select, textarea {margin: 0;}
 
 /* make buttons play nice in IE */
 button {width: auto; overflow: visible;}
- 
+
 /* scale images in IE7 more attractively */
 .ie7 img {-ms-interpolation-mode: bicubic;}
 
@@ -114,9 +114,9 @@ button {width: auto; overflow: visible;}
 .ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
 
 /* let's clear some floats */
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.clearfix:after { clear: both; }  
-.clearfix { zoom: 1; }  
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
 
 
 
@@ -126,21 +126,21 @@ button {width: auto; overflow: visible;}
 /* new Linux- and Windows-friendly sans-serif font stack: http://mky.be/fontstack */
 body {font: 13px Helmet, Freesans, sans-serif;}
 
-/* using local fonts? make sure to read up on Paul Irish's 
-	Bulletproof @font-face syntax: http://mky.be/font-face/bulletproof/ */
+/* using local fonts? make sure to read up on Paul Irish's
+  Bulletproof @font-face syntax: http://mky.be/font-face/bulletproof/ */
 
 /* we like off-black for text */
 body, select, input, textarea {color: #333;}
 
 a { color: #0090E2; }
-a:hover { color: #4885B5; }
+a:hover { color: #0060B0; }
 
 /* Custom text-selection colors (remove any text shadows: twitter.com/miketaylr/status/12228805301) */
 ::-moz-selection{background: #FF5E99; color: #fff; text-shadow: none;}
-::selection {background: #FF5E99; color: #fff; text-shadow: none;} 
+::selection {background: #FF5E99; color: #fff; text-shadow: none;}
 
-/*	j.mp/webkit-tap-highlight-color */
-a:link {-webkit-tap-highlight-color: #FF5E99;} 
+/*  j.mp/webkit-tap-highlight-color */
+a:link {-webkit-tap-highlight-color: #FF5E99;}
 
 ins {background-color: #FF5E99; color: #fff; text-decoration: none;}
 mark {background-color: #FF5E99; color: #fff; font-style: italic; font-weight: bold;}
@@ -155,6 +155,7 @@ html, body {
 #container {
   max-width: 720px;
   margin: 0px auto;
+  width: 100%;
 }
 #main {
   padding: 40px;
@@ -244,6 +245,7 @@ blockquote > *:last-child {
 }
 
 h1, h2, h3 {
+  font-family: "News Cycle", "Helvetica Neue", arial, sans-serif;
   font-weight: bold;
   line-height: 40px;
   margin-bottom: 20px;
@@ -345,11 +347,18 @@ ul.links a:hover {
   color: #d99800;
 }
 
+.highlight {
+  background: #f9f9f9;
+  border: solid 1px #ddd;
+  margin-bottom: 20px;
+  padding: 9px;
+}
+
 /* Syntax highlighting
 -------------------------------------------------------------------------------*/
 .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #f9f9f9; border: solid 1px #ddd; overflow: auto; }
-.highlight pre { padding: 10px; white-space: pre; }
+.highlight  { overflow: auto; }
+.highlight pre { padding: 0; white-space: pre; }
 .highlight .c { color: #808080 } /* Comment */
 .highlight .err { color: #F00000; background-color: #F0A0A0 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
@@ -444,10 +453,10 @@ ul.links a:hover {
 }
 
 @media all and (orientation: portrait) {
-	
+
 }
 
 @media all and (orientation: landscape) {
-	
+
 }
 
