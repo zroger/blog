@@ -2,6 +2,7 @@
 layout: post
 title: First pics with my new camera
 created: 1236570236
+disqus_id: node/17
 ---
 While in DC for <a href="http://dc2009.drupalcon.org/">Drupalcon</a>, the <a href="http://www.dpreview.com/reviews/sonydslra100/">Sony &alpha;100</a> digital <abbr title="Single Lens Reflex">SLR</abbr> that I ordered last week arrived.  I got an incredible deal on it through the Sony Family Center store, yay perks!  
 

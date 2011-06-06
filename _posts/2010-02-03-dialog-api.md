@@ -2,6 +2,7 @@
 layout: post
 title: Dialog API
 created: 1265249844
+disqus_id: node/32
 ---
 I've been hard at work lately on my new pet project, the <a href="http://drupal.org/project/dialog">Dialog API</a> module. My goal for this module is simple. Take the incredibly simple CTools ajax command framework, and merry it to the jQuery UI Dialog widget, to provide an incredibly simple api for creating dynamic dialogs. The basis of this module comes from CTools' modal framework (which I wrote about <a href="/node/31">previously</a>), so if you've used that in the past, using dialog should be a breeze.
 
