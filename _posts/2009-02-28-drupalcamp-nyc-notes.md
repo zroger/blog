@@ -28,7 +28,7 @@ The second session was about advanced multisite setups.  The main focus of this 
 <dl>
 <dt><a href="http://drupal.org/getting-started/5/install/multi-site">Drupal Handbook: Multi-site</a></dt>
 <dd>This is the drupal handbook page for multi-site.  It is writting for Drupal 5, but is still relevant for Drupal 6.</dd>
-<dt><a href="http://drupal.org/project/installation+profiles">Drupal.org contributed Installation Profiles</dt>
+<dt><a href="http://drupal.org/project/installation+profiles">Drupal.org contributed Installation Profiles</a></dt>
 <dd>There are several contributed installation profiles.  Find one that suits your needs or use one as a base for your own custom installer.</dd>
 <dt><a href="http://drupal.org/project/install_profile_api">Install Profile API module</a></dt>
 <dd>This module is a huge help when building install profiles. It provides CRUD functions for building common Drupal structures like nodes, users, roles, profiles, etc...</dd>
