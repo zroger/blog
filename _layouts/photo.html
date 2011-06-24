@@ -6,7 +6,9 @@ layout: master
   <h1>{{page.title}}</h1>
 
   <div class="photo">
-    <img src="{{ site.base-url }}img/photos/640/{{ page.photo }}">
+    <a href="{{ site.base-url }}img/photos/{{ page.photo }}.html">
+      <img src="{{ site.base-url }}img/photos/640/{{ page.photo }}">
+    </a>
   </div>
 
   <div class='body'>{{ content }}</div>

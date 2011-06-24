@@ -47,7 +47,10 @@
      - Transparency is not recommended (iOS will put a black BG behind the icon) -->
 
   <!-- jQuery Mobile -->
+  <!--
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+  -->
+  <link rel="stylesheet" href="/css/jquery.mobile-1.0b1.naked.css " />
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
 
@@ -56,10 +59,10 @@
   <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
 
   <!-- CSS: screen, mobile & print are all in the same file -->
-  <link rel="stylesheet" href="/css/normalize.css?2011-06-23 22:35:48 -0400">
-  <link rel="stylesheet" href="/css/highlight.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/normalize.css?2011-06-24 13:42:02 -0400">
+  <link rel="stylesheet" href="/css/highlight.css?2011-06-24 13:42:02 -0400">
   <link rel="stylesheet" href="/css/jquery.mobile.zroger.css " />
-  <link rel="stylesheet" href="/css/site.css " />
+  <!-- <link rel="stylesheet" href="/css/site.css " /> -->
 
 
 </head>
@@ -72,8 +75,8 @@
     <h1>zroger</h1>
   </header>
 
-  <div id="main" data-role="content">
-    <ul data-role="listview" data-filter="true" data-theme="z" data-filter-theme="d" data-dividertheme="d">
+  <div data-role="content">
+    <ul data-role="listview" data-theme="z" data-dividertheme="c">
 
 
   
@@ -368,9 +371,14 @@
   </div>
 
   <footer data-role="footer">
-    &copy; 2011, Roger López<br />
-    <em><small>2011-06-23 22:35:48 -0400</small></em>
+    <p>
+  &copy; 2011, Roger López<br />
+  <em><small>2011-06-24 13:42:02 -0400</small></em>
+</p>
+
   </footer>
+</div>
+
 
 <!-- here comes the javascript -->
 

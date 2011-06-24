@@ -39,8 +39,8 @@
   -->
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 
-  <link rel="shortcut icon" href="/img/favicon.png">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="shortcut icon" href="{{ site.base-url }}img/favicon.png">
+  <link rel="apple-touch-icon" href="{{ site.base-url }}img/apple-touch-icon.png">
   <!-- The is the icon for iOS's Web Clip.
      - size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4's retina display (IMHO, just go ahead and use the biggest one)
      - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
@@ -50,7 +50,7 @@
   <!--
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
   -->
-  <link rel="stylesheet" href="/css/jquery.mobile-1.0b1.naked.css " />
+  <link rel="stylesheet" href="{% stylesheet css/jquery.mobile-1.0b1.naked.css %}" />
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
 
@@ -59,47 +59,22 @@
   <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
 
   <!-- CSS: screen, mobile & print are all in the same file -->
-  <link rel="stylesheet" href="/css/normalize.css?2011-06-24 13:42:02 -0400">
-  <link rel="stylesheet" href="/css/highlight.css?2011-06-24 13:42:02 -0400">
-  <link rel="stylesheet" href="/css/jquery.mobile.zroger.css " />
-  <!-- <link rel="stylesheet" href="/css/site.css " /> -->
+  <link rel="stylesheet" href="{{ site.base-url }}css/normalize.css?{{ site.time }}">
+  <link rel="stylesheet" href="{{ site.base-url }}css/highlight.css?{{ site.time }}">
+  <link rel="stylesheet" href="{% stylesheet css/jquery.mobile.zroger.css %}" />
+  <!-- <link rel="stylesheet" href="{% stylesheet css/site.css %}" /> -->
 
 
 </head>
 
 <body>
 
-<div data-role="page" data-theme="z">
-  <header data-role="header">
-    <a href="/" data-direction="reverse">Back</a>
-    <h1>zroger</h1>
-  </header>
-
-  <div data-role="content">
-    
-  <a href="/2008/12/monique-saves-a-life">
-    <div class="date">December 04, 2008</div>
-    <h2>Monique saves a life!</h2>
-</a>
-
-
-
-  </div>
-
-  <footer data-role="footer">
-    <p>
-  &copy; 2011, Roger López<br />
-  <em><small>2011-06-24 13:42:02 -0400</small></em>
-</p>
-
-  </footer>
-</div>
-
+{{ content }}
 
 <!-- here comes the javascript -->
 
 <!-- this is where we put our custom functions -->
-<script src="/js/functions.js"></script>
+<script src="{{ site.base-url }}js/functions.js"></script>
 
 <!-- Asynchronous google analytics; this is the official snippet.
    Replace UA-XXXXXX-XX with your site's ID and uncomment to enable.
