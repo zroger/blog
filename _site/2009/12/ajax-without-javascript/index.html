@@ -1,0 +1,328 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!-- the "no-js" class is for Modernizr. -->
+
+<head id="www-zroger-com">
+
+  <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>zroger</title>
+
+  <meta name="title" content="">
+  <meta name="description" content="">
+  <!-- Google will often use this as its description of your page/site. Make it good. -->
+
+  <meta name="google-site-verification" content="">
+  <!-- Speaking of Google, don't forget to set your site up: http://google.com/webmasters -->
+
+  <meta name="author" content="Roger López">
+  <meta name="Copyright" content="Copyright Roger López 2011. All Rights Reserved.">
+
+  <!-- Dublin Core Metadata : http://dublincore.org/ -->
+  <meta name="DC.title" content="zroger.com">
+  <meta name="DC.subject" content="What you're about.">
+  <meta name="DC.creator" content="Who made this site.">
+
+  <!--  Mobile Viewport Fix
+  j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+  device-width : Occupy full width of the screen in its current orientation
+  initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+  maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+  -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <!-- The is the icon for iOS's Web Clip.
+     - size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4's retina display (IMHO, just go ahead and use the biggest one)
+     - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+     - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+
+  <!-- jQuery Mobile -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+
+  <!-- Google Web Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Oswald&v1' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+
+  <!-- CSS: screen, mobile & print are all in the same file -->
+  <link rel="stylesheet" href="/css/normalize.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/highlight.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/jquery.mobile.zroger.css " />
+  <link rel="stylesheet" href="/css/site.css " />
+
+
+</head>
+
+<body>
+
+<div data-role="page" data-theme="z">
+  <header data-role="header">
+    <a href="/" data-direction="reverse">Back</a>
+    <h1>zroger</h1>
+  </header>
+
+  <div id="main" data-role="content">
+    <article>
+  <div class='date'>December 07, 2009</div>
+  <h1>Ajax without Javascript</h1>
+
+  <div class='body'><p>Ajax is nothing new. And especially since Drupal&#8217;s adoption of <a href='http://jquery.com'>jQuery</a>, ajax has certainly become much easier. Generally, ajax requests in Drupal involve</p>
+
+<ul>
+<li>PHP code (usually in a module) to generate the necessary markup for the originating page.</li>
+
+<li>Javascript code to handle the ajax response.</li>
+
+<li>Some form of initialization code, usually in a Drupal behavior, to connect the markup to the behaviors.</li>
+
+<li>PHP to generate the response, both for the ajax request and for the non-javascript page. (Oh, and it&#8217;s up to you to decide how to tell the difference!)</li>
+</ul>
+
+<h2 id='let_the_chaos_begin'>Let the Chaos begin</h2>
+
+<p>There&#8217;s nothing inherently wrong with the above method, but there&#8217;s definitely room for improvement. With the introduction of <a href='http://drupal.org/project/ctools'>CTools</a> (a.k.a Chaos tool suite), ajax development has become much simpler. From the CTools project page on Drupal.org,</p>
+<blockquote>
+  "AJAX responder -- tools to make it easier for the server to handle AJAX requests and tell the client what to do with them."
+</blockquote>
+<p>CTools introduces the concept of an ajax command. A command is a javascript function within the Drupal.CTools.AJAX.commands namespace, which can be invoked as an ajax response. The server-side callback returns an object representation of a command, and this object contains everything necessary to run the command on the client-side. The easiest way to explain this is with an example.</p>
+
+<p>We will be building an example module, which I will call &#8220;example&#8221;. This module will display a page with an ajax link that will reveal more content when clicked.</p>
+
+<p>The first thing that is needed is a hook_menu() implementation to define two new paths. The first is the page that will hold the link, and the second defines the ajax callback. Take note of the %ctools_js in the second entry. This is how we will determine if the call is being made from an ajax call or not. More on that when we get to the callback code.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='sd'>/** </span>
+<span class='sd'> * Implementation of hook_menu().</span>
+<span class='sd'> */</span>
+<span class='k'>function</span> <span class='nf'>example_menu</span><span class='p'>()</span> <span class='p'>{</span>
+  <span class='nv'>$items</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+  <span class='nv'>$items</span><span class='p'>[</span><span class='s1'>&#39;test&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
+    <span class='s1'>&#39;title&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;Ajax Test&#39;</span><span class='p'>,</span>
+    <span class='s1'>&#39;page callback&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;example_test_main&#39;</span><span class='p'>,</span>
+    <span class='s1'>&#39;access arguments&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;access content&#39;</span><span class='p'>),</span>
+  <span class='p'>);</span>
+  <span class='nv'>$items</span><span class='p'>[</span><span class='s1'>&#39;test/%ctools_js/go&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
+    <span class='s1'>&#39;page callback&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;example_test_ajax_callback&#39;</span><span class='p'>,</span>
+    <span class='s1'>&#39;page arguments&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>),</span>
+    <span class='s1'>&#39;access arguments&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;access content&#39;</span><span class='p'>),</span>
+  <span class='p'>);</span>
+  <span class='k'>return</span> <span class='nv'>$items</span><span class='p'>;</span>   
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>Now for the main page callback. The only output on this page is a link to the second path that we defined. The link has two things to take note of. First, the path of the link is test/nojs/go. The &#8216;nojs&#8217; portion of the path will be replaced with &#8216;ajax&#8217; when an ajax call is made. This distinction is how we detect if the callback is being called from an ajax request or not. The second thing to note is that we add a class of &#8216;ctools-use-ajax&#8217; to the link. This tells the ajax-responder javascript that this link should be processed by the ajax responder. And finally, we must include the ajax-responder javascript.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='k'>function</span> <span class='nf'>example_test_main</span><span class='p'>()</span> <span class='p'>{</span>
+  <span class='nv'>$output</span> <span class='o'>=</span> <span class='nx'>l</span><span class='p'>(</span><span class='s1'>&#39;Load more content&#39;</span><span class='p'>,</span> <span class='s1'>&#39;test/nojs/go&#39;</span><span class='p'>,</span> <span class='k'>array</span><span class='p'>(</span>
+    <span class='s1'>&#39;attributes&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;id&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;test-ajax-link&#39;</span><span class='p'>,</span> <span class='s1'>&#39;class&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;ctools-use-ajax&#39;</span><span class='p'>)));</span>
+
+  <span class='nx'>ctools_add_js</span><span class='p'>(</span><span class='s1'>&#39;ajax-responder&#39;</span><span class='p'>);</span>
+  <span class='k'>return</span> <span class='nv'>$output</span><span class='p'>;</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>Last but not least, the ajax callback. Notice how the function takes a boolean parameter for $js. CTools takes care of turning the strings (&#8216;nojs&#8217; or &#8216;ajax&#8217;) into a boolean, so we have a very clean way to determine how to respond. We will be returning the same content, in both conditions, to maintain accessibility for non-javascript enabled browsers (for <a href='http://en.wikipedia.org/wiki/Progressive_enhancement'>progressive enhancement</a> as well as <abbr title='Search engine optimization'>SEO</abbr>).</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='k'>function</span> <span class='nf'>example_test_ajax_callback</span><span class='p'>(</span><span class='nv'>$js</span> <span class='o'>=</span> <span class='k'>FALSE</span><span class='p'>)</span> <span class='p'>{</span>
+  <span class='nv'>$output</span> <span class='o'>=</span> <span class='nx'>t</span><span class='p'>(</span><span class='s1'>&#39;&lt;p&gt;Lorem ipsum dolor sit amet...&lt;/p&gt;&#39;</span><span class='p'>);</span>
+
+  <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$js</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>ctools_include</span><span class='p'>(</span><span class='s1'>&#39;ajax&#39;</span><span class='p'>);</span>
+
+    <span class='nv'>$commands</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+    <span class='nv'>$commands</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nx'>ctools_ajax_command_after</span><span class='p'>(</span><span class='s1'>&#39;#test-ajax-link&#39;</span><span class='p'>,</span> <span class='nv'>$output</span><span class='p'>);</span>
+    <span class='nv'>$commands</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nx'>ctools_ajax_command_remove</span><span class='p'>(</span><span class='s1'>&#39;#test-ajax-link&#39;</span><span class='p'>);</span>
+
+    <span class='nx'>ctools_ajax_render</span><span class='p'>(</span><span class='nv'>$commands</span><span class='p'>);</span>
+    <span class='c1'>// above command will exit().</span>
+  <span class='p'>}</span>
+  <span class='k'>else</span> <span class='p'>{</span>
+    <span class='k'>return</span> <span class='nv'>$output</span><span class='p'>;</span>
+  <span class='p'>}</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>In the javascript branch of the conditional, we construct an array of command objects. Luckily for us, CTools offers a complementary php function for each javascript command, so creating the commands array is simple. The particular set of commands that we are using will add the output after the link, then remove the link. You can add as many commands as needed. The last thing to do, is to pass the commands array through ctools_ajax_render, which will output the commands array as JSON and exit. From that point on, the ajax-responder javascript on the first page takes over, and executes the commands in the order they are received.</p>
+
+<h2 id='tada'>Tada!</h2>
+
+<p>And that&#8217;s it. No javascript, just commands. CTools provides many commands for most of the basic javascript actions, from which you can build compound actions to do almost anything. Obviously, this set of commands cannot possibly cover every possible option, but I&#8217;ll leave that for another day. Until then, here is the list of ajax commands provided by CTools.</p>
+
+<ul>
+<li>
+<p>replace (ctools_ajax_command_replace)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>data: The data to use with the jquery replace() function.</li>
+</ul>
+</li>
+
+<li>
+<p>prepend (ctools_ajax_command_prepend)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>data: The data to use with the jquery prepend() function.</li>
+</ul>
+</li>
+
+<li>
+<p>append (ctools_ajax_command_append)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>data: The data to use with the jquery append() function.</li>
+</ul>
+</li>
+
+<li>
+<p>after (ctools_ajax_command_after)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>data: The data to use with the jquery after() function.</li>
+</ul>
+</li>
+
+<li>
+<p>before (ctools_ajax_command_before)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>data: The data to use with the jquery before() function.</li>
+</ul>
+</li>
+
+<li>
+<p>remove (ctools_ajax_command_remove) * selector: The CSS selector. This can be any selector jquery uses in $().</p>
+</li>
+
+<li>
+<p>changed (ctools_ajax_command_change)</p>
+
+<ul>
+<li>selector: The CSS selector. This selector will have &#8216;changed&#8217; added as a clas.</li>
+
+<li>star: If set, will add a star to this selector. It must be within the &#8216;selector&#8217; above.</li>
+</ul>
+</li>
+
+<li>
+<p>alert (ctools_ajax_command_alert)</p>
+
+<ul>
+<li>title: The title of the alert.</li>
+
+<li>data: The data in the alert.</li>
+</ul>
+</li>
+
+<li>
+<p>css (ctools_ajax_command_css)</p>
+
+<ul>
+<li>selector: The CSS selector to add CSS to.</li>
+
+<li>argument: An array of &#8216;key&#8217;: &#8216;value&#8217; CSS selectors to set.</li>
+</ul>
+</li>
+
+<li>
+<p>attr (ctools_ajax_command_attr)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>name: The name or key of the data attached to this selector.</li>
+
+<li>value: The value of the data.</li>
+</ul>
+</li>
+
+<li>
+<p>settings (ctools_ajax_command_settings) * argument: An array of settings to add to Drupal.settings via $.extend</p>
+</li>
+
+<li>
+<p>data (ctools_ajax_command_data)</p>
+
+<ul>
+<li>selector: The CSS selector. This can be any selector jquery uses in $().</li>
+
+<li>name: The name or key of the data attached to this selector.</li>
+
+<li>value: The value of the data. Not just limited to strings can be any format.</li>
+</ul>
+</li>
+
+<li>
+<p>redirect (ctools_ajax_command_redirect) * url: The url to be redirected to. This can be an absolute URL or a Drupal path.</p>
+</li>
+
+<li>
+<p>reload (ctools_ajax_command_reload)</p>
+
+<ul>
+<li>submit (ctools_ajax_command_submit)</li>
+
+<li>selector: The CSS selector to identify the form for submission. This can be any selector jquery uses in $().</li>
+</ul>
+</li>
+</ul></div>
+
+  <div class="post-more">
+      <strong>Further reading:</strong> If you liked this post, you might want to check out some of my other posts about <a href="/tags/drupal/">drupal</a>, or other posts from <a href="/2009/12">December 2009</a>.
+  </div>
+</article>
+
+  </div>
+
+  <footer data-role="footer">
+    &copy; 2011, Roger López<br />
+    <em><small>2011-06-23 22:35:48 -0400</small></em>
+  </footer>
+
+<!-- here comes the javascript -->
+
+<!-- this is where we put our custom functions -->
+<script src="/js/functions.js"></script>
+
+<!-- Asynchronous google analytics; this is the official snippet.
+   Replace UA-XXXXXX-XX with your site's ID and uncomment to enable.
+
+<script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XXXXXX-XX']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+-->
+
+</body>
+</html>

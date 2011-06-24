@@ -1,0 +1,213 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!-- the "no-js" class is for Modernizr. -->
+
+<head id="www-zroger-com">
+
+  <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>zroger</title>
+
+  <meta name="title" content="">
+  <meta name="description" content="">
+  <!-- Google will often use this as its description of your page/site. Make it good. -->
+
+  <meta name="google-site-verification" content="">
+  <!-- Speaking of Google, don't forget to set your site up: http://google.com/webmasters -->
+
+  <meta name="author" content="Roger López">
+  <meta name="Copyright" content="Copyright Roger López 2011. All Rights Reserved.">
+
+  <!-- Dublin Core Metadata : http://dublincore.org/ -->
+  <meta name="DC.title" content="zroger.com">
+  <meta name="DC.subject" content="What you're about.">
+  <meta name="DC.creator" content="Who made this site.">
+
+  <!--  Mobile Viewport Fix
+  j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+  device-width : Occupy full width of the screen in its current orientation
+  initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+  maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+  -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <!-- The is the icon for iOS's Web Clip.
+     - size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4's retina display (IMHO, just go ahead and use the biggest one)
+     - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+     - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+
+  <!-- jQuery Mobile -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+
+  <!-- Google Web Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Oswald&v1' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+
+  <!-- CSS: screen, mobile & print are all in the same file -->
+  <link rel="stylesheet" href="/css/normalize.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/highlight.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/jquery.mobile.zroger.css " />
+  <link rel="stylesheet" href="/css/site.css " />
+
+
+</head>
+
+<body>
+
+<div data-role="page" data-theme="z">
+  <header data-role="header">
+    <a href="/" data-direction="reverse">Back</a>
+    <h1>zroger</h1>
+  </header>
+
+  <div id="main" data-role="content">
+    <article>
+  <div class='date'>December 16, 2009</div>
+  <h1>Ajax modal windows, the easy way</h1>
+
+  <div class='body'><p>Last week I wrote about the awesomeness that is the <a href='/node/30'>CTools ajax framework</a>. If you&#8217;re anything like me, your mind immediately started racing about all the cool possibilities this opens up. One of those cool possibilities is yet another hidden <a href='http://drupal.org/project/ctools' title='Chaos Tools project page on Drupal.org'>CTools</a> gem, the modal framework. If you&#8217;ve ever used <a href='http://drupal.org/project/panels' title='Panels project page on Drupal.org'>panels</a>, then you&#8217;ve seen CTools modals in action. In this post, I&#8217;ll show you how to use modals, in the same way that panels does.</p>
+
+<h2 id='first_things_first'>First things first&#8230;</h2>
+
+<p>If you missed my last post, chances are that this one will not make any sense. I highly suggest <a href='/node/30'>reading it before continuing with this one</a>.</p>
+
+<p>We will be building a very simple module with two pages. The first simply holds the link to the modal window, the second is the page that will be displayed in the modal. Lets start with some basic code to set up our test module. This is almost identical to the ajax module we built last week. The biggest difference here, is that the class on the link has been changed to &#8216;ctools-use-modal&#8217; and we are adding the javascript using ctools_modal_add_js().</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='sd'>/**</span>
+<span class='sd'> * Implementation of hook_menu().</span>
+<span class='sd'> */</span>
+<span class='k'>function</span> <span class='nf'>example_menu</span><span class='p'>()</span> <span class='p'>{</span>  
+  <span class='nv'>$items</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+  <span class='nv'>$items</span><span class='p'>[</span><span class='s1'>&#39;test&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
+    <span class='s1'>&#39;title&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;Ajax Test&#39;</span><span class='p'>,</span>
+    <span class='s1'>&#39;page callback&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;example_test_main&#39;</span><span class='p'>,</span>
+    <span class='s1'>&#39;access arguments&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;access content&#39;</span><span class='p'>),</span>
+  <span class='p'>);</span>
+  <span class='nv'>$items</span><span class='p'>[</span><span class='s1'>&#39;test/%ctools_js/go&#39;</span><span class='p'>]</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
+    <span class='s1'>&#39;page callback&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;example_test_modal_callback&#39;</span><span class='p'>,</span>
+    <span class='s1'>&#39;page arguments&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='mi'>1</span><span class='p'>),</span>
+    <span class='s1'>&#39;access arguments&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;access content&#39;</span><span class='p'>),</span>
+  <span class='p'>);</span>
+  <span class='k'>return</span> <span class='nv'>$items</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='sd'>/**</span>
+<span class='sd'> * The main page that holds the link to the modal.</span>
+<span class='sd'> */</span>
+<span class='k'>function</span> <span class='nf'>example_test_main</span><span class='p'>()</span> <span class='p'>{</span>
+  <span class='c1'>// Load the modal library and add the modal javascript.</span>
+  <span class='nx'>ctools_include</span><span class='p'>(</span><span class='s1'>&#39;modal&#39;</span><span class='p'>);</span>
+  <span class='nx'>ctools_modal_add_js</span><span class='p'>();</span>
+
+  <span class='nv'>$output</span> <span class='o'>=</span> <span class='nx'>l</span><span class='p'>(</span><span class='s1'>&#39;Load modal content&#39;</span><span class='p'>,</span> <span class='s1'>&#39;test/nojs/go&#39;</span><span class='p'>,</span> <span class='k'>array</span><span class='p'>(</span>
+    <span class='s1'>&#39;attributes&#39;</span> <span class='o'>=&gt;</span> <span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;class&#39;</span> <span class='o'>=&gt;</span> <span class='s1'>&#39;ctools-use-modal&#39;</span><span class='p'>)));</span>
+
+  <span class='k'>return</span> <span class='nv'>$output</span><span class='p'>;</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>All that is left is to define the modal callback. Since we are using the %ctools_js wildcard, this same callback will be responsible for the content in both modal and non-modal states. Remember that the %ctools_js wildcard will be translated to a boolean value in which TRUE signals that we are in a javascript context.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='k'>function</span> <span class='nf'>example_test_modal_callback</span><span class='p'>(</span><span class='nv'>$js</span> <span class='o'>=</span> <span class='k'>FALSE</span><span class='p'>)</span> <span class='p'>{</span>
+  <span class='nv'>$output</span> <span class='o'>=</span> <span class='nx'>t</span><span class='p'>(</span><span class='s1'>&#39;&lt;p&gt;Lorem ipsum dolor sit amet...&lt;/p&gt;&#39;</span><span class='p'>);</span>
+  <span class='nv'>$title</span> <span class='o'>=</span> <span class='nx'>t</span><span class='p'>(</span><span class='s1'>&#39;Modal example&#39;</span><span class='p'>);</span>
+  <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$js</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>ctools_include</span><span class='p'>(</span><span class='s1'>&#39;ajax&#39;</span><span class='p'>);</span>
+    <span class='nx'>ctools_include</span><span class='p'>(</span><span class='s1'>&#39;modal&#39;</span><span class='p'>);</span>
+    <span class='nx'>ctools_modal_render</span><span class='p'>(</span><span class='nv'>$title</span><span class='p'>,</span> <span class='nv'>$output</span><span class='p'>);</span>
+    <span class='c1'>// above command will exit().</span>
+  <span class='p'>}</span>
+  <span class='k'>else</span> <span class='p'>{</span>
+    <span class='nx'>drupal_set_title</span><span class='p'>(</span><span class='nv'>$title</span><span class='p'>);</span>
+    <span class='k'>return</span> <span class='nv'>$output</span><span class='p'>;</span>
+  <span class='p'>}</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>The code above is about as simple as it gets with modal windows. It simply outputs some text and a title in a modal window. The modal library provides a nice utility function for this, ctools_modal_render(). The function builds the necessary ajax command object and passes it to the browser using ctools_ajax_render().</p>
+
+<p>But now for something not so trivial. Arguably the best use case for modal windows is for displaying forms. This is where the modal library really excels. In this example, we will show the user login form in a modal. Your first impulse might be to just send the output of <a href='http://api.drupal.org/api/function/drupal_get_form/6' title='drupal_get_form() on api.drupal.org'>drupal_get_form()</a> to the modal. While this would display the form in the modal, it would not handle all of the submission and validation properly. Normally Drupal form submissions end in a redirect, which would break our ajax callbacks. Luckily, CTools has an answer for this situation. In the ajax context, we use ctools_modal_form_wrapper() to build the form. The one tricky part here, is that we must evaluate the return value of this function. This function returns an array, that may or may not be populated with ajax commands. If the form submission was not completed for any reason, such as validation errors, then the array will have the commands needed to re-display the form, with errors, in the modal window. If the array is empty, then we can assume that the form was submitted properly. In this case, we add one or more ajax commands to the array to let the user know that the form submitted successfully. In the case of our login form, we do that by redirecting the user to their account page.</p>
+
+<p>One thing I forgot to mention, is that ctools_modal_form_wrapper() expects you to pass in a form_state array. drupal_get_form() allows you to pass in additional arguments after the form id, but the ctools form functions expect all arguments to be passed through the form_state array. In the case of modal forms, the form_state must contain at least an &#8216;ajax&#8217; and a &#8216;title&#8217; element.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='k'>function</span> <span class='nf'>example_test_modal_callback</span><span class='p'>(</span><span class='nv'>$js</span> <span class='o'>=</span> <span class='k'>FALSE</span><span class='p'>)</span> <span class='p'>{</span>
+  <span class='k'>if</span> <span class='p'>(</span><span class='nv'>$js</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>ctools_include</span><span class='p'>(</span><span class='s1'>&#39;ajax&#39;</span><span class='p'>);</span>
+    <span class='nx'>ctools_include</span><span class='p'>(</span><span class='s1'>&#39;modal&#39;</span><span class='p'>);</span>
+    <span class='nv'>$form_state</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>(</span>
+      <span class='s1'>&#39;ajax&#39;</span> <span class='o'>=&gt;</span> <span class='k'>TRUE</span><span class='p'>,</span>
+      <span class='s1'>&#39;title&#39;</span> <span class='o'>=&gt;</span> <span class='nx'>t</span><span class='p'>(</span><span class='s1'>&#39;Login&#39;</span><span class='p'>),</span>
+    <span class='p'>);</span>
+    <span class='nv'>$output</span> <span class='o'>=</span> <span class='nx'>ctools_modal_form_wrapper</span><span class='p'>(</span><span class='s1'>&#39;user_login&#39;</span><span class='p'>,</span> <span class='nv'>$form_state</span><span class='p'>);</span>
+    <span class='k'>if</span> <span class='p'>(</span><span class='k'>empty</span><span class='p'>(</span><span class='nv'>$output</span><span class='p'>))</span> <span class='p'>{</span>
+      <span class='nv'>$output</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nx'>ctools_modal_command_loading</span><span class='p'>();</span>
+      <span class='nv'>$output</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nx'>ctools_ajax_command_redirect</span><span class='p'>(</span><span class='s1'>&#39;user&#39;</span><span class='p'>);</span>
+    <span class='p'>}</span>
+    <span class='nx'>ctools_ajax_render</span><span class='p'>(</span><span class='nv'>$output</span><span class='p'>);</span>
+  <span class='p'>}</span>
+  <span class='k'>else</span> <span class='p'>{</span>
+    <span class='k'>return</span> <span class='nx'>drupal_get_form</span><span class='p'>(</span><span class='s1'>&#39;user_login&#39;</span><span class='p'>);</span>
+  <span class='p'>}</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>Hopefully, I&#8217;ve explained enough so that you can understand what is going on in the above function.</p>
+
+<h2 id='dialog_api'>Dialog API</h2>
+
+<p>So here is where I will diverge a little bit. While using the CTools modals, I kept wishing that I could use the <a href='http://jqueryui.com/demos/dialog/'>jQuery UI Dialog widget</a> as the front-end for my modals. So I took the time to build it. <a href='http://drupal.org/project/dialog' title='Dialog API project page on Drupal.org'>Dialog API</a> aims to be functionally equivalent to the modal library, except that it uses jQuery UI. The ajax commands that it exposes are all nearly identical to their modal equivalents, except that the display command allows you to pass an array of options to the Dialog widget. This allows you to control things like height and width from the ajax callback.</p>
+
+<p>And thanks to the insane work of <a href='http://robloach.net/' title='Does this guy ever sleep?'>Rob Loach</a>, Dialog API already has a Drupal 7 port. Very exciting stuff.</p></div>
+
+  <div class="post-more">
+      <strong>Further reading:</strong> If you liked this post, you might want to check out some of my other posts about <a href="/tags/drupal/">drupal</a>, or other posts from <a href="/2009/12">December 2009</a>.
+  </div>
+</article>
+
+  </div>
+
+  <footer data-role="footer">
+    &copy; 2011, Roger López<br />
+    <em><small>2011-06-23 22:35:48 -0400</small></em>
+  </footer>
+
+<!-- here comes the javascript -->
+
+<!-- this is where we put our custom functions -->
+<script src="/js/functions.js"></script>
+
+<!-- Asynchronous google analytics; this is the official snippet.
+   Replace UA-XXXXXX-XX with your site's ID and uncomment to enable.
+
+<script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XXXXXX-XX']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+-->
+
+</body>
+</html>

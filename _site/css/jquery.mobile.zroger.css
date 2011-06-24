@@ -1,0 +1,107 @@
+/* Z
+-----------------------------------------------------------------------------------------------------------*/
+.ui-body-z .ui-content {
+  xx-padding: 0;
+}
+
+.ui-bar-z {
+  background: #555;
+  color: #fff;
+  text-shadow: 0 1px 0 #eee;
+}
+.ui-bar-z .ui-title {
+  color: #fff;
+  font-family: "Oswald", "Helvetica Neue", arial, sans-serif;
+  font-size: 36px;
+  height: 60px;
+  line-height: 52px;
+  margin: 0 90px;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.ui-bar-z,
+.ui-bar-z input,
+.ui-bar-z select,
+.ui-bar-z textarea,
+.ui-bar-z button {
+  font-family: Helvetica, Arial, sans-serif;
+}
+.ui-bar-z .ui-link-inherit {
+  color:          #333;
+}
+.ui-bar-z .ui-link {
+  color:          #2489CE;
+  font-weight: bold;
+}
+.ui-body-z {
+  border: 1px solid     #ccc;
+  color:          #333333;
+  text-shadow: 0 1px 0  #fff;
+  background:       #ffffff;
+}
+.ui-body-z,
+.ui-body-z input,
+.ui-body-z select,
+.ui-body-z textarea,
+.ui-body-z button {
+  font-family: Helvetica, Arial, sans-serif;
+}
+.ui-body-z .ui-link-inherit {
+  color:          #333333;
+}
+.ui-body-z .ui-link {
+  color:          #2489CE;
+  font-weight: bold;
+}
+.ui-btn-up-z {
+  border: 1px solid     #ccc;
+  background:       #fff;
+  font-weight: bold;
+  color:          #444;
+  text-shadow: 0 1px 1px #fff;
+}
+.ui-btn-up-z a.ui-link-inherit {
+  color:          #333;
+}
+.ui-btn-hover-z {
+  border: 1px solid     #aaa;
+  background:       #eeeeee;
+  font-weight: bold;
+  color:          #222;
+  cursor: pointer;
+  text-shadow: 0 1px 1px  #fff;
+  background-image: -moz-linear-gradient(top, 
+              #fdfdfd, 
+              #eeeeee);
+  background-image: -webkit-gradient(linear,left top,left bottom,
+    color-stop(0,     #fdfdfd),
+    color-stop(1,     #eeeeee));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fdfdfd', EndColorStr='#eeeeee')";
+}
+.ui-btn-hover-z a.ui-link-inherit {
+  color:          #222;
+}
+.ui-btn-down-z {
+  border: 1px solid     #aaaaaa;
+  background:       #ffffff;
+  font-weight: bold;
+  color:          #111;
+  text-shadow: 0 1px 1px  #ffffff;
+  background-image: -moz-linear-gradient(top, 
+              #eeeeee, 
+              #ffffff);
+  background-image: -webkit-gradient(linear,left top,left bottom,
+    color-stop(0,     #eeeeee),
+    color-stop(1,     #ffffff));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#ffffff')";
+}
+.ui-btn-down-z a.ui-link-inherit {
+  color:          #111;
+}
+.ui-btn-up-z,
+.ui-btn-hover-z,
+.ui-btn-down-z {
+  font-family: Helvetica, Arial, sans-serif;
+  text-decoration: none;
+}

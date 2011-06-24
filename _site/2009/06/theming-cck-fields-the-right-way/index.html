@@ -1,0 +1,190 @@
+<!doctype html>
+
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!-- the "no-js" class is for Modernizr. -->
+
+<head id="www-zroger-com">
+
+  <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>zroger</title>
+
+  <meta name="title" content="">
+  <meta name="description" content="">
+  <!-- Google will often use this as its description of your page/site. Make it good. -->
+
+  <meta name="google-site-verification" content="">
+  <!-- Speaking of Google, don't forget to set your site up: http://google.com/webmasters -->
+
+  <meta name="author" content="Roger López">
+  <meta name="Copyright" content="Copyright Roger López 2011. All Rights Reserved.">
+
+  <!-- Dublin Core Metadata : http://dublincore.org/ -->
+  <meta name="DC.title" content="zroger.com">
+  <meta name="DC.subject" content="What you're about.">
+  <meta name="DC.creator" content="Who made this site.">
+
+  <!--  Mobile Viewport Fix
+  j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+  device-width : Occupy full width of the screen in its current orientation
+  initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+  maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width
+  -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+  <link rel="shortcut icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <!-- The is the icon for iOS's Web Clip.
+     - size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4's retina display (IMHO, just go ahead and use the biggest one)
+     - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+     - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+
+  <!-- jQuery Mobile -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+
+  <!-- Google Web Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Oswald&v1' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+
+  <!-- CSS: screen, mobile & print are all in the same file -->
+  <link rel="stylesheet" href="/css/normalize.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/highlight.css?2011-06-23 22:35:48 -0400">
+  <link rel="stylesheet" href="/css/jquery.mobile.zroger.css " />
+  <link rel="stylesheet" href="/css/site.css " />
+
+
+</head>
+
+<body>
+
+<div data-role="page" data-theme="z">
+  <header data-role="header">
+    <a href="/" data-direction="reverse">Back</a>
+    <h1>zroger</h1>
+  </header>
+
+  <div id="main" data-role="content">
+    <article>
+  <div class='date'>June 16, 2009</div>
+  <h1>Theming cck fields, the "right way"</h1>
+
+  <div class='body'><p>So that title may be a little ambitious, but this is how I like to theme CCK fields, and (at least in my mind) its the most flexible and Drupal-like way.</p>
+
+<h2 id='problem'>Problem:</h2>
+
+<p>I have a multi-value node reference field that I&#8217;ve added to almost every content type on a site, so that any post may contain a hand-crafted list of related topics. The problem lies in that I want something different than the standard CCK nodereference markup. This could easily be done in the node.tpl.php file, but not all content types have this field, and the code would need to be replicated in every content type which has that field.</p>
+<img alt='' height='430' src='http://img.skitch.com/20090617-rqp6dtcrup24gcfwxiipp4mksd.jpg' width='430' />
+<h2 id='solution'>Solution:</h2>
+
+<p>What I want to theme is the field container. Not the whole node, not the individual field values, but the group of field values as a piece of any node. Luckily the Theme Developer module came in handy. I noticed that each CCK field is based on content-field.tpl.php, and could use a more specific template to theme an individual field. This works across content types, so theming the field once will work regardless of the content type that the field is attached to.</p>
+<img alt='' height='357' src='http://img.skitch.com/20090617-t68gg6da9rbscei6sfbkf5y8um.jpg' width='421' />
+<p>I started out by copying content-field.tpl.php from cck/theme folder to my theme folder. This file must be in the theme folder, otherwise Drupal will not find any template files derived from it. Then I made a copy of content-field.tpl.php and name d it content-field-field_related_posts.tpl.php, where field_related_posts is the name of the field I am theming.</p>
+<img alt='' height='226' src='http://img.skitch.com/20090617-8idjqugbcs7uwwdiieuubet2fx.jpg' width='405' />
+<p>And now the fun part. The code.</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='c1'>// $Id: content-field.tpl.php,v 1.1.2.5 2008/11/03 12:46:27 yched Exp $</span>
+
+<span class='sd'>/**</span>
+<span class='sd'> * @file content-field.tpl.php</span>
+<span class='sd'> * Default theme implementation to display the value of a field.</span>
+<span class='sd'> *</span>
+<span class='sd'> * Available variables:</span>
+<span class='sd'> * - $node: The node object.</span>
+<span class='sd'> * - $field: The field array.</span>
+<span class='sd'> * - $items: An array of values for each item in the field array.</span>
+<span class='sd'> * - $teaser: Whether this is displayed as a teaser.</span>
+<span class='sd'> * - $page: Whether this is displayed as a page.</span>
+<span class='sd'> * - $field_name: The field name.</span>
+<span class='sd'> * - $field_type: The field type.</span>
+<span class='sd'> * - $field_name_css: The css-compatible field name.</span>
+<span class='sd'> * - $field_type_css: The css-compatible field type.</span>
+<span class='sd'> * - $label: The item label.</span>
+<span class='sd'> * - $label_display: Position of label display, inline, above, or hidden.</span>
+<span class='sd'> * - $field_empty: Whether the field has any valid value.</span>
+<span class='sd'> *</span>
+<span class='sd'> * Each $item in $items contains:</span>
+<span class='sd'> * - &#39;view&#39; - the themed view for that item</span>
+<span class='sd'> *</span>
+<span class='sd'> * @see template_preprocess_field()</span>
+<span class='sd'> */</span>
+
+  <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$field_empty</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='c1'>// build a simple array of items</span>
+    <span class='nv'>$list_items</span> <span class='o'>=</span> <span class='k'>array</span><span class='p'>();</span>
+    <span class='k'>foreach</span> <span class='p'>(</span><span class='nv'>$items</span> <span class='k'>as</span> <span class='nv'>$delta</span> <span class='o'>=&gt;</span> <span class='nv'>$item</span><span class='p'>)</span> <span class='p'>{</span>
+      <span class='k'>if</span> <span class='p'>(</span><span class='o'>!</span><span class='nv'>$item</span><span class='p'>[</span><span class='s1'>&#39;empty&#39;</span><span class='p'>])</span> <span class='p'>{</span>
+        <span class='nv'>$list_items</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nv'>$item</span><span class='p'>[</span><span class='s1'>&#39;view&#39;</span><span class='p'>];</span>
+      <span class='p'>}</span>
+    <span class='p'>}</span>
+    
+    <span class='k'>switch</span> <span class='p'>(</span><span class='nv'>$label_display</span><span class='p'>)</span> <span class='p'>{</span>
+      <span class='k'>case</span> <span class='s1'>&#39;above&#39;</span><span class='o'>:</span>
+        <span class='k'>print</span> <span class='nx'>theme</span><span class='p'>(</span><span class='s1'>&#39;item_list&#39;</span><span class='p'>,</span> <span class='nv'>$list_items</span><span class='p'>,</span> <span class='nx'>t</span><span class='p'>(</span><span class='nv'>$label</span><span class='p'>));</span>
+        <span class='k'>break</span><span class='p'>;</span>
+        
+      <span class='k'>case</span> <span class='s1'>&#39;inline&#39;</span><span class='o'>:</span>
+        <span class='k'>print</span> <span class='s1'>&#39;&lt;div&gt;&lt;strong&gt;&#39;</span><span class='o'>.</span> <span class='nx'>t</span><span class='p'>(</span><span class='nv'>$label</span><span class='p'>)</span> <span class='o'>.</span><span class='s1'>&#39;:&lt;/strong&gt; &#39;</span><span class='o'>.</span> <span class='nb'>join</span><span class='p'>(</span><span class='s1'>&#39;, &#39;</span><span class='p'>,</span> <span class='nv'>$list_items</span><span class='p'>)</span> <span class='o'>.</span><span class='s1'>&#39;&lt;/div&gt;&#39;</span><span class='p'>;</span>
+        <span class='k'>break</span><span class='p'>;</span>
+        
+      <span class='k'>case</span> <span class='s1'>&#39;hidden&#39;</span><span class='o'>:</span>
+      <span class='k'>default</span><span class='o'>:</span>
+        <span class='k'>print</span> <span class='nx'>theme</span><span class='p'>(</span><span class='s1'>&#39;item_list&#39;</span><span class='p'>,</span> <span class='nv'>$list_items</span><span class='p'>);</span>
+        <span class='k'>break</span><span class='p'>;</span>
+        
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>There are a couple of variables that I should explain, but as you can see, there is a ton of documentation already in this file, since it was copied from content-field.tpl.php. The first variable used is $field_empty. I don&#8217;t want anything output if there is nothing in the field, so I wrap the whole thing in an if statement. Then I loop over the $items array. Each of the items in the $items array is itself an array, with an &#8216;empty&#8217; index and a &#8216;view&#8217; index. Basically, if its not empty, I add the view to a simple array, essentially collapsing the more complicated $items array. Then, I do a switch on the $label_display variable, to determine how to output the new array I&#8217;ve created.</p>
+<img alt='' height='430' src='http://img.skitch.com/20090617-pw469xf6tm828jruisid8f49jr.jpg' width='430' />
+<p>$label_display hold one of three values, &#8216;above&#8217;, &#8216;inline&#8217; or &#8216;hidden&#8217;. This value is chosen on the Display Fields tab of each content type in the Content Type administration section. Since I&#8217;m using CCK&#8217;s built in UI, this field remains tied to the decisions made in the admin interface. For this particular implementation, I am display the items in a Drupal &#8220;item_list&#8221; when the label display is set to &#8220;above&#8221; or &#8220;hidden&#8221;, but displaying the items as a comma separated list with an inline label when set to &#8220;inline&#8221;.</p>
+
+<p>This is just one example of what can be done with content field templates. You could also build different outputs based on the $teaser or $page variables which are also available to you.</p></div>
+
+  <div class="post-more">
+      <strong>Further reading:</strong> If you liked this post, you might want to check out some of my other posts about <a href="/tags/drupal/">drupal</a>, or other posts from <a href="/2009/06">June 2009</a>.
+  </div>
+</article>
+
+  </div>
+
+  <footer data-role="footer">
+    &copy; 2011, Roger López<br />
+    <em><small>2011-06-23 22:35:48 -0400</small></em>
+  </footer>
+
+<!-- here comes the javascript -->
+
+<!-- this is where we put our custom functions -->
+<script src="/js/functions.js"></script>
+
+<!-- Asynchronous google analytics; this is the official snippet.
+   Replace UA-XXXXXX-XX with your site's ID and uncomment to enable.
+
+<script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XXXXXX-XX']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+-->
+
+</body>
+</html>
