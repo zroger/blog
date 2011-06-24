@@ -1,7 +1,7 @@
 ---
 layout: photo
 title: Snorkeling in Cancun
-category: photo
+category: photos
 photo: cancun-snorkeling.jpg
 ---
 

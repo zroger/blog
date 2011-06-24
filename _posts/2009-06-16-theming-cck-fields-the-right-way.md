@@ -3,6 +3,7 @@ layout: post
 title: Theming cck fields, the "right way"
 created: 1245202455
 disqus_id: node/25
+category: drupal
 ---
 So that title may be a little ambitious, but this is how I like to theme CCK fields, and (at least in my mind) its the most flexible and Drupal-like way.
 

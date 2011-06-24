@@ -1,0 +1,146 @@
+---
+---
+@link_color: #2C7EC7;
+@text_color: #555;
+@alt_link_color: #C9ED34;
+@stripe_color: #2C7EC7;
+
+/* Typography
+----------------------------------------*/
+body {
+  color: @text_color;
+  font-family: "Helvetica Neue", arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+a, a:visited {
+  color: @link_color;
+  padding: 3px;
+  text-decoration: none;
+}
+a:hover, a:active {
+}
+h1, h2, h3 {
+  font-weight: normal;
+  line-height: 1.2;
+  margin: 0;
+}
+h1 { font-size: 36px; }
+h2 { font-size: 30px; }
+h3 { font-size: 24px; }
+
+p, ul, ol {
+  line-height: 1.4;
+  margin-bottom: 1.5em;
+  margin-top: 0;
+}
+ul p, ul ol, ul ul,
+ol p, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+ul {
+  list-style: disc outside;
+  margin-left: 2em;
+}
+ol {
+  list-style: decimal outside;
+  margin-left: 2em;
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: solid 5px #ddd;
+  font-style: italic;
+  margin-bottom: 1.5em;
+  margin-left: 20px;
+  margin-right: 40px;
+  padding: 10px;
+}
+blockquote > *:last-child {
+  margin-bottom: 0;
+}
+
+pre, code, kbd, samp {
+  font-family: "Inconsolata", monospace, sans-serif;
+}
+.highlight {
+  background: #f9f9f9;
+  border: solid 1px #ddd;
+  margin-bottom: 1.5em;
+  padding: 9px;
+}
+.date, .eyebrow {
+  font-size: 12px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.read-more {
+  white-space: nowrap;
+}
+
+/* Article Teaser
+----------------------------------------*/
+article.teaser {
+  border-top: solid 1px #bbb;
+  font-family: "Oswald", "Helvetica Neue", arial, sans-serif;
+}
+article.teaser a,
+article.teaser a.ui-link {
+  color: #555;
+  display: block;
+  font-weight: normal;
+  padding: 10px;
+}
+article.teaser a:hover {
+  background: #f0f0f0;
+}
+article.teaser .date {
+  color: #999;
+  font-size: 12px;
+  line-height: 12px;
+  text-transform: uppercase;
+}
+article.teaser h2 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+/* Clear Floated Elements
+----------------------------------------*/
+
+/* http://sonspring.com/journal/clearing-floats */
+
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
+
+.clearfix:before,
+.clearfix:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/*
+  The following zoom:1 rule is specifically for IE6 + IE7.
+  Move to separate stylesheet if invalid CSS is a problem.
+*/
+
+.clearfix {
+  zoom: 1;
+}

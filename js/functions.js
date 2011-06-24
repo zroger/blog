@@ -5,7 +5,7 @@ $(window).keypress(function(event) {
   switch(event.which) {
     // b - baseline
     case 98:
-      $('#main').toggleClass('show-baseline');
+      $('body').toggleClass('show-baseline');
       event.preventDefault();
       break;
     default:

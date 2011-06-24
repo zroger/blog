@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Ajax modal windows, the easy way
-categories:
+category: drupal
+tags:
   - ajax
   - ctools
   - dialog

@@ -3,6 +3,7 @@ layout: post
 title: "30-minute modules: Alias"
 created: 1227568651
 disqus_id: node/12
+category: drupal
 ---
 So often there are very simple tasks that never make it into a proper module.  Today the need arose for one of these tasks and I decided to take the small amount of time to do it right.
 

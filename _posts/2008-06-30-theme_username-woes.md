@@ -3,6 +3,7 @@ layout: post
 title: theme_username woes
 created: 1214865660
 disqus_id: node/2
+category: drupal
 ---
 I got an email the other day informing me that a blog author on a site I had build could not post comments on his own blog. Authenticated users were not having the same problem, just the blog author. So using devel, I switched to his user account and tried it myself.
 

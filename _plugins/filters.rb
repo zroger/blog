@@ -25,7 +25,7 @@ module Jekyll
         "#{categories[0...-1].join(', ')}, #{connector} #{categories[-1]}"
       end
     end
-  
+
     # Outputs the post.date as formatted html, with hooks for CSS styling.
     #
     #  +date+ is the date object to format as HTML.
@@ -44,7 +44,6 @@ module Jekyll
       end
       categories
     end
-
   end
 
 end

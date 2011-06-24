@@ -3,6 +3,7 @@ layout: post
 title: Keep It Simple
 created: 1226372896
 disqus_id: node/1
+category: drupal
 ---
 <p><img src="http://rdlopez.com/sites/all/themes/custom/keepitsimple/images/screenshot.png" class="float-left"  />I'm always on the lookout for a high-quality html/css template.  I found <a href="http://styleshout.com">StyleShout.com</a> after reading <a href="http://walkah.net/blog/walkah/vectorlover-drupal-theme">Walkah's post</a> about building a Drupal theme out of the VectorLover template.  That's where I found <a href="http://www.styleshout.com/templates/preview/KeepItSimple1-0/index.html">KeepItSimple</a>, a simple, clean and full-featured template.</p>
 

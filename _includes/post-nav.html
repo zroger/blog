@@ -1,0 +1,17 @@
+{% if page.next or page.previous %}
+  <div class="post-nav clearfix">
+    {% if page.previous %}
+      <div class="previous">
+        <div class="label">Previous post</div>
+        <a href="{{ page.previous.url }}">&laquo; {{ page.previous.title }}</a>
+      </div>
+    {% endif %}
+    {% if page.next %}
+      <div class="next">
+        <div class="label">Next post</div>
+        <a href="{{ page.next.url }}">{{ page.next.title }} &raquo;</a>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+

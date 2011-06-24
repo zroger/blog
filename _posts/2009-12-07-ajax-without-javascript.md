@@ -3,6 +3,7 @@ layout: post
 title: Ajax without Javascript
 created: 1260242191
 disqus_id: node/30
+category: drupal
 ---
 Ajax is nothing new. And especially since Drupal's adoption of <a href="http://jquery.com">jQuery</a>, ajax has certainly become much easier. Generally, ajax requests in Drupal involve
 

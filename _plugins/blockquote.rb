@@ -1,4 +1,4 @@
-# Originally sourced from https://github.com/josegonzalez/josediazgonzalez.com/blob/master/_plugins/blockquote.rb
+# @see https://github.com/josegonzalez/josediazgonzalez.com/blob/master/_plugins/blockquote.rb
 
 module Jekyll
 

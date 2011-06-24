@@ -3,6 +3,7 @@ layout: post
 title: Dialog API
 created: 1265249844
 disqus_id: node/32
+category: drupal
 tags:
   - featured
 ---

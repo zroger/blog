@@ -1,0 +1,10 @@
+---
+layout: master
+title: Topics
+---
+<ul>
+{% for category in page.categories %}
+  <li><a href="{{ category }}/{{ site.category_dir }}/{{ category | replace:' ', '-' | downcase  }}">{{ category }}</a></li>
+{% endfor %}
+</ul>
+<pre>{{ site }}</pre>

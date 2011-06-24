@@ -6,4 +6,5 @@ base-url: "/"
 paginate: 10
 exclude:
   - readme.md
-
+category_dir: topics
+lessc: "lessc"

@@ -3,6 +3,7 @@ layout: post
 title: Operator precedence gets me every time!
 created: 1227154778
 disqus_id: node/9
+category: drupal
 ---
 While working on a module last night, I couldn't figure out why I couldn't get caching to work.  I have done object caching at least a dozen times before but I couldn't figure out why I was not able to get the cached object back. Here's the code I was using:
 
